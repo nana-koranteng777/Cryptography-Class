@@ -1,0 +1,20 @@
+
+from Crypto.Cipher import DES
+from Crypto.Util.Padding import pad, unpad
+import base64
+
+key = b'8bytekey'
+
+message = input("Enter message to encrypt: ")
+
+cipher = DES.new(key, DES.MODE_ECB)
+
+encrypted = cipher.encrypt(pad(message.encode(), DES.block_size))
+encrypted_text = base64.b64encode(encrypted).decode()
+
+print("Encrypted message:", encrypted_text)
+
+encrypted_bytes = base64.b64decode(encrypted_text)
+decrypted = unpad(cipher.decrypt(encrypted_bytes), DES.block_size)
+
+print("Decrypted message:", decrypted.decode())
